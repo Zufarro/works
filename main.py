@@ -5,34 +5,36 @@ class Person():
         self.task_list = []
         self.complete_tasks_list = []
 
-    def add(self,task):
-        if task not in self.task_list:
-            print ("added new task: " + task[0])
-            self.task_list.append(task)
+    def add_new_task(self,Task):
+        t = [Task.task_name, Task.duration, Task.start_time, Task.status]
+        if t not in self.task_list:
+            self.task_list.append(t)
         else:
             print ("the task is already on the task list")
 
-    def complete(self,task):
-        if task in self.task_list:
-            self.task_list.remove(task)
-            task[3] = "complete"
-            self.complete_tasks_list.append(task)
-            print("task "+task[0]+" complete")
+    def complete_current_task(self, Task):
+        if Task.task_name == (self.task_list[0])[0]:
+            del self.task_list[0]
+            self.status = "complete"
+            t = [Task.task_name, Task.duration, Task.start_time, Task.status]
+            self.complete_tasks_list.append(t)
         else:
-            print("error")
+            print("Task \""+str(Task.task_name)+"\" is not current")
 
-    def clear(self):
+    def clear_tasks(self):
         self.task_list.clear()
-        print("task list cleared")
 
-    def show_completes_numbers(self):
-        print(self.complete_tasks_list)
+    def completes_numbers(self):
+        return len(self.complete_tasks_list)
 
-    def show_uncompletes(self):
-        print(self.tasks_list)
+    def uncompletes_tasks(self):
+        uncompletes_tasks_list = []
+        for i in self.task_list:
+            uncompletes_tasks_list.append(i[0])
+        return uncompletes_tasks_list
 
-    def show_uncompletes_numbers(self):
-        print(len(self.tasks_list))
+    def uncompletes_numbers(self):
+        return len(self.task_list)
 
 
 class Task():
@@ -41,4 +43,3 @@ class Task():
         self.duration = duration
         self.start_time = start_time
         self.status = "new"
-        self.all_info = [self.task_name, self.duration, self.start_time, self.status]
